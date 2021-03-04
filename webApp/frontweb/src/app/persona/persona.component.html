@@ -1,0 +1,142 @@
+<div class="ui-g">
+    <p-toast></p-toast>
+    <p-confirmDialog header="Confirmación" acceptLabel="Si" rejectLabel="No" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+    <p-panel header="Administración de Productos" [style]="{width: '70%', margin: '0 auto'}">
+        <div style="margin-bottom: 20px">
+            <p-menubar [model]="items"></p-menubar>
+        </div>
+        <p-table [value]="personas" [columns]="cols" [responsive]="true" selectionMode="single" [(selection)]="selectedPersona"
+            dataKey="ID" [paginator]="true" [rows]="15">
+             <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-persona let-columns="columns">
+                <tr [pSelectableRow]="persona">
+                    <td *ngFor="let col of columns">
+                        {{persona[col.field]}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-panel>
+    <p-dialog header="Persona" [responsive]="true" [style]="{width: '400px'}" [(visible)]="displaySaveDialog"
+        [modal]="true">
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="Nombre">Nombre</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="Nombre"  [(ngModel)]="persona.nombre_producto" />
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="Cantidad">Cantidad</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="Cantidad" [(ngModel)]="persona.cantidad" />
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="usuc">Usuario Creo</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="usu_create" [(ngModel)]="persona.usu_create" />
+                </div>
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" pButton icon="pi pi-check" (click)="save()" label="Guardar"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+    <p-dialog header="Persona" [responsive]="true" [style]="{width: '400px'}" [(visible)]="displayEditDialog"
+    [modal]="true">
+    <div class="ui-g ui-fluid">
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="Nombre">Nombre </label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="nombre_producto" [(ngModel)]="persona.Nombre_Producto" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="Cantidad">Cantidad </label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="cantidad" [(ngModel)]="persona.Cantidad" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="usuc">Usuario Creo </label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="usu_create" [(ngModel)]="persona.Usu_create" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="usuc">Usuario update </label>
+            </div>
+            <div class="ui-g-8">
+              <p-dropdown [options]="options" [(ngModel)]="selectedUsers" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a Users">
+                <ng-template  let-User let-options="options" pTemplate="item">
+                    <div class="options-item">
+                        <div>{{User[options.name]}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" pButton icon="pi pi-check" (click)="update()" label="Editar"></button>
+        </div>
+    </p-footer>
+</p-dialog >
+<p-dialog header="Persona" [responsive]="true" [style]="{width: '400px'}" [(visible)]="displayDelDialog"
+[modal]="true">
+<div class="ui-g-12">
+    <div class="ui-g-4">
+        <label for="usuc">Usuario Creo *</label>
+    </div>
+    <div class="ui-g-8">
+       <!----> <input pInputText id="usu_create" [(ngModel)]="persona.Usu_create" />
+    </div>
+</div>
+<div class="ui-g-12">
+    <div class="ui-g-4">
+        <label for="usuc">Usuario update *</label>
+    </div>
+    <div class="ui-g-8">
+        <!--<input pInputText id="usu_update" [(ngModel)]="persona.Usu_update" />-->
+        <p-dropdown [options]="options" [(ngModel)]="selectedUsers" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a Users">
+            <ng-template let-options pTemplate="item">
+                <div class="options-item">
+                    <div>{{options.name}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>    
+    </div>
+</div>
+<p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="button" pButton icon="pi pi-trash" (click)="delete()" label="Eliminar"></button>
+    </div>
+</p-footer>
+    
+</p-dialog>
+</div>
